@@ -14,10 +14,12 @@ def stack_connectomes(W):
     Returns the stacked connectomes Ceids
     """
     MASKS_DIR = os.path.join(RESOURCES_DIR, "Masks")
-    Ce_mask = pd.read_csv(os.path.join(MASKS_DIR, "dk_sero_exc_mask.csv"), index_col=0)
+    Ce_mask = pd.read_csv(os.path.join(MASKS_DIR, "dk_sero_exc_mask_for_sn.csv"), index_col=0)
     Ci_mask = pd.read_csv(os.path.join(MASKS_DIR, "dk_sero_inh_mask.csv"), index_col=0)
     Cd_mask = pd.read_csv(os.path.join(MASKS_DIR, "dk_sero_dopa_mask.csv"), index_col=0)
     Cs_mask = pd.read_csv(os.path.join(MASKS_DIR, "dk_sero_sero_mask.csv"), index_col=0)
+
+    #Ce_mask = reset_ce_for_midbrain(Ce_mask)
 
     Ce = W.values * Ce_mask.values
     Ci = W.values * Ci_mask.values
@@ -44,13 +46,15 @@ def setup_receptors():
     Function that loads the receptor density data for D1, D2, and 5HT2A and normalizes them
     """
     MASKS_DIR = os.path.join(RESOURCES_DIR, "Masks")
-    Rdf = pd.read_csv(os.path.join(MASKS_DIR, "dk_D1_D2_5HT2A_receptor_data.csv"))
+    Rdf = pd.read_csv(os.path.join(MASKS_DIR, "dk_D1_D2_5HT2A_receptor_data.csv"), index_col=0)
+    Ce_mask = pd.read_csv(os.path.join(MASKS_DIR, "dk_sero_exc_mask.csv"), index_col=0) 
+    Rdf = Rdf.loc[Ce_mask.index] # Assigning the correct order to the receptors
     Rd1 = Rdf['D1_number'].values
     Rd2 = Rdf['D2_number'].values
     Rsero = Rdf['5HT2A_number'].values
-    Rd2 = 3*Rd2/(5*Rd2.max())
-    Rd1 =  3*Rd1/(5*Rd1.max())
-    Rsero =  3*Rsero/(5*Rsero.max())
+    Rd2 = Rd2/(5*Rd1.max())
+    Rd1 =  Rd1/(5*Rd1.max())
+    Rsero =  Rsero/(5*Rsero.max())
     Rd1 = Rd1.reshape(-1,1)
     Rd2 = Rd2.reshape(-1,1)
     Rsero = Rsero.reshape(-1,1)
@@ -97,6 +101,20 @@ def setup_ja(zscoresdf, weights, pid, mean, std):
     filled_matrix[filled_matrix < 0] = 0
 
     return filled_matrix.reshape(-1,1)
+
+def adjust_ja_for_midbrain(Ja, regions_names):
+    roi = ['L.VTA', 'R.VTA', 'L.RN', 'R.RN', 'L.SN', 'R.SN']
+    for r in roi:
+        Ja[regions_names.index(r)] = 18
+
+    return Ja
+
+def reset_ce_for_midbrain(ce):
+    roi = ['L.VTA', 'R.VTA', 'L.RN', 'R.RN', 'L.SN', 'R.SN']
+    ce.loc[roi] = 0
+    ce[roi] = 0
+
+    return ce
 
 # =============
 # INTEGRATION

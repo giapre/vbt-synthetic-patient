@@ -5,5 +5,7 @@ class Paths:
     DATA = ROOT / "data"
     RESOURCES = ROOT / "resources"
     RESULTS = ROOT / "results"
-    #FIGURES = ROOT / "figures"
+    FIGURES = ROOT / "figures"
+
+    TYPE_OF_SWEEP = "last_small_we_no_feed_we_wd_ws_noise=0.0631_sweep"
 

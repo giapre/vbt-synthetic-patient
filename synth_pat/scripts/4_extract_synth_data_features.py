@@ -1,4 +1,4 @@
-from scripts.analysis_utils import compute_features
+from synth_pat.scripts.analysis_utils import compute_features
 import pandas as pd
 import numpy as np
 import os
@@ -9,8 +9,9 @@ means = np.round(np.linspace(0,50,10),2)
 stds = np.round(np.linspace(0,5,10),2)
 
 input_dir = f'{Paths.RESULTS}'
-type_of_sweep = 'sigma_we'
-file = os.path.join(Paths.RESULTS, f'{type_of_sweep}_sweep.npz')
+type_of_sweep = Paths.TYPE_OF_SWEEP
+print(f'Processing {type_of_sweep}')
+file = os.path.join(Paths.RESULTS, f'{type_of_sweep}.npz')
 
 data = np.load(file)
 bold_all = data["bold"]
