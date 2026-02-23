@@ -19,7 +19,7 @@ def stack_connectomes(W):
     Cd_mask = pd.read_csv(os.path.join(MASKS_DIR, "dk_sero_dopa_mask.csv"), index_col=0)
     Cs_mask = pd.read_csv(os.path.join(MASKS_DIR, "dk_sero_sero_mask.csv"), index_col=0)
 
-    #Ce_mask = reset_ce_for_midbrain(Ce_mask)
+    Ce_mask = reset_ce_for_midbrain(Ce_mask)
 
     Ce = W.values * Ce_mask.values
     Ci = W.values * Ci_mask.values

@@ -45,8 +45,6 @@ W = pd.read_csv(
     index_col=0
 )
 
-midbrain = ['L.VTA', 'R.VTA', 'L.RN', 'R.RN', 'L.SN', 'R.SN']
-W.loc[midbrain] /= 20
 L = pd.read_csv(
     os.path.join(DATA_DIR, "averaged_lengths_with_sero_and_dopa.csv"),
     index_col=0
