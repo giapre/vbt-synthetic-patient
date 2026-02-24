@@ -7,5 +7,5 @@ class Paths:
     RESULTS = ROOT / "results"
     FIGURES = ROOT / "figures"
 
-    TYPE_OF_SWEEP = "last_small_we_no_feed_we_wd_ws_noise=0.0631_sweep"
+    TYPE_OF_SWEEP = "last_small_we_no_feed_we_wd_ws_noise=0.1585_sweep"
 

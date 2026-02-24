@@ -16,7 +16,7 @@ we_array = [0.        , 0.22222222, 0.44444444, 0.66666667, 0.88888889,
 
 feat_df = pd.read_csv(feat_file, index_col=0)
 we_array = np.unique(feat_df['we'])
-we_value = we_array[4]
+we_value = we_array[6]
 feat_df = feat_df[feat_df['we']==we_value]
 bolds = np.load(bold_file)
 bold = bolds['bold']

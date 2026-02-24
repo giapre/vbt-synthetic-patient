@@ -52,9 +52,9 @@ def setup_receptors():
     Rd1 = Rdf['D1_number'].values
     Rd2 = Rdf['D2_number'].values
     Rsero = Rdf['5HT2A_number'].values
-    Rd2 = Rd2/(5*Rd1.max())
-    Rd1 =  Rd1/(5*Rd1.max())
-    Rsero =  Rsero/(5*Rsero.max())
+    Rd2 = 3*Rd2/(5*Rd1.max())
+    Rd1 =  3*Rd1/(5*Rd1.max())
+    Rsero =  3*Rsero/(5*Rsero.max())
     Rd1 = Rd1.reshape(-1,1)
     Rd2 = Rd2.reshape(-1,1)
     Rsero = Rsero.reshape(-1,1)

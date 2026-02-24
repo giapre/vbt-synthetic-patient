@@ -30,7 +30,7 @@ DATA_DIR = Paths.DATA
 
 type_of_sweep = Paths.TYPE_OF_SWEEP
 
-g_p1, g_p2, g_p3 = np.mgrid[0:0.5:10j, -3:2:10j, -3:2:10j]
+g_p1, g_p2, g_p3 = np.mgrid[0:0.5:10j, -4:2:10j, -4:2:10j]
 
 jp_p1 = jp.array(g_p1.ravel())
 jp_p2 = jp.array(10**g_p2.ravel())
@@ -73,7 +73,7 @@ setup = {
     "init_state": jp.array(
         [.01, -55.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     ).reshape(10, 1),
-    "noise": 0.0631,
+    "noise": 0.1585,
 }
 
 Ceids = stack_connectomes(W)

@@ -194,7 +194,7 @@ def plot_2d_heatmaps(feat_df, title, metrics, columns, index, outpath):
     plt.savefig(savepath)
     plt.close()
 
-def plot_feat_and_color_by_param(params, scatter0, scatter1, feat_df, outpath):
+def save_feat_and_color_by_param(params, scatter0, scatter1, feat_df, outpath):
     # Create figure with 3 subplots
     fig, axes = plt.subplots(1, 3, figsize=(18, 5))
 
@@ -223,5 +223,66 @@ def plot_feat_and_color_by_param(params, scatter0, scatter1, feat_df, outpath):
     savepath = f'{outpath}/pca_scatter.png'
     plt.savefig(savepath)
     #plt.show()
+
+def plot_feat_and_color_by_param(params, scatter0, scatter1, feat_df):
+    # Create figure with 3 subplots
+    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+
+    for ax, param in zip(axes, params):
+
+        if param in ['wd', 'ws', 'sigma']:
+            c = np.log(feat_df[param].astype(float) )  # inverse log10
+        else:
+            c = feat_df[param].astype(float)
+
+        sc = ax.scatter(
+            scatter0,
+            scatter1,
+            c=c,
+            cmap='viridis',
+            alpha=0.7
+        )
+
+        ax.set_title(f'Colored by {param}')
+        ax.set_xlabel('PC1')
+        ax.set_ylabel('PC2')
+
+        fig.colorbar(sc, ax=ax)
+
+    plt.tight_layout()
+    plt.show()
+
+def plot_pca_feat_importance(params, X_r, feat_df, importance):
+
+    pc1_corr = [
+        np.corrcoef(X_r[:, 0], feat_df[p])[0, 1]
+        for p in params]
+
+    pc2_corr = [
+        np.corrcoef(X_r[:, 1], feat_df[p])[0, 1]
+        for p in params]
+
+    importance_params = importance.loc[
+        importance.index.intersection(params)
+    ]
+
+    fig, axes = plt.subplots(1, 3, figsize=(10, 4))
+
+    # LEFT: Importance
+    axes[0].bar(params, importance_params.values)
+    axes[0].set_title("Feature Importance")
+    axes[0].set_ylabel("Absolute Loading")
+
+    # RIGHT: Correlation with PC1
+    axes[1].bar(params, pc1_corr)
+    axes[1].set_title("Correlation with PC1")
+    axes[1].set_ylabel("Pearson r")
+    # RIGHT: Correlation with PC1
+    axes[2].bar(params, pc2_corr)
+    axes[2].set_title("Correlation with PC1")
+    axes[2].set_ylabel("Pearson r")
+
+    plt.tight_layout()
+    plt.show()
 
     

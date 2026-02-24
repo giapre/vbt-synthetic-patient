@@ -62,11 +62,11 @@ for we_value in np.unique(feat_df['we']):
 from synth_pat.scripts.analysis_utils import do_pca
 
 X_r, pca = do_pca(feat_df.dropna())
-from synth_pat.scripts.plot_utils import plot_feat_and_color_by_param
+from synth_pat.scripts.plot_utils import save_feat_and_color_by_param
 params = ['we', 'wd', 'ws']
 scatter0 = X_r[:,0]
 scatter1 = X_r[:,1]
-plot_feat_and_color_by_param(params, scatter0, scatter1, feat_df.dropna(), outpath)
+save_feat_and_color_by_param(params, scatter0, scatter1, feat_df.dropna(), outpath)
 
 from synth_pat.scripts.analysis_utils import pca_feature_importance
 importance = pca_feature_importance(feat_df, pca)
