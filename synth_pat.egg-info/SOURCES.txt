@@ -6,9 +6,19 @@ synth_pat.egg-info/PKG-INFO
 synth_pat.egg-info/SOURCES.txt
 synth_pat.egg-info/dependency_links.txt
 synth_pat.egg-info/top_level.txt
+synth_pat/scripts/4_extract_synth_data_features.py
+synth_pat/scripts/5_compute_summary_data_features.py
+synth_pat/scripts/6_plot_and_Save.py
 synth_pat/scripts/__init__.py
+synth_pat/scripts/analysis_utils.py
 synth_pat/scripts/gast_model.py
+synth_pat/scripts/interractive_vis.py
+synth_pat/scripts/jdopa_run_simulation copy.py
+synth_pat/scripts/jdopa_run_simulation.py
+synth_pat/scripts/noise_run_simulation.py
+synth_pat/scripts/only_bold_interactilve.py
+synth_pat/scripts/plot_utils.py
 synth_pat/scripts/run_simulation.py
-synth_pat/scripts/sigm_d1d2sero_fused_jax.py
-synth_pat/scripts/sigm_sweep.py
 synth_pat/scripts/simulation_utils.py
+synth_pat/scripts/utils.py
+synth_pat/scripts/wd_ws_interractive_vis.py

@@ -4,10 +4,11 @@ import scipy
 import jax
 import os 
 import vbjax as vb
-import gast_model as gm
+import synth_pat.scripts.gast_model as gm
+from synth_pat.paths import Paths
 
 PROJECT_DIR = os.path.abspath(os.path.join(os.getcwd(), '../..'))
-RESOURCES_DIR = os.path.join(PROJECT_DIR, 'resources')
+RESOURCES_DIR = Paths.RESOURCES
 
 def stack_connectomes(W):
     """Function that loads the 4 conncectivity masks and multiplies them by the patient's weights W.

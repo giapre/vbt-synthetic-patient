@@ -1,0 +1,28 @@
+configfile: "config.yaml"
+
+import itertools
+
+WS = config["ws"]
+CTX = config["njdopa_ctx"]
+STR = config["njdopa_str"]
+TYPE = config["type_of_sweep"]
+
+rule all:
+    input:
+        expand(
+            "results/{type}_sweep/ws={ws}_njdopa_ctx={ctx}_njdopa_str={str}.npz",
+            type=TYPE,
+            ws=WS,
+            ctx=CTX,
+            str=STR
+        )
+
+rule run_sim:
+    output:
+        "results/{type}_sweep/ws={ws}_njdopa_ctx={ctx}_njdopa_str={str}.npz"
+    params:
+        type=TYPE
+    shell:
+        """
+        python run_simulation.py {wildcards.ws} {wildcards.ctx} {wildcards.str} {params.type} {output}
+        """
