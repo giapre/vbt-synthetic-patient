@@ -200,7 +200,7 @@ def save_feat_and_color_by_param(params, scatter0, scatter1, feat_df, outpath):
 
     for ax, param in zip(axes, params):
 
-        if param in ['wd', 'ws', 'sigma']:
+        if param in ['wd', 'ws', 'njdopa_ctx', 'njdopa_str', 'sigma']:
             c = np.log(feat_df[param].astype(float) )  # inverse log10
         else:
             c = feat_df[param].astype(float)

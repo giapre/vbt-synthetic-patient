@@ -1,6 +1,5 @@
 import os
 import sys
-import time
 import numpy as np
 import pandas as pd
 import jax.numpy as jp
@@ -9,11 +8,12 @@ import synth_pat.scripts.gast_model as gm
 
 from synth_pat.paths import Paths
 from synth_pat.scripts.simulation_utils import (
-    stack_connectomes,
-    setup_delays,
-    setup_ja,
-    run_bold_sweep,
-    setup_receptors
+#    stack_connectomes,
+#    setup_delays,
+#    setup_ja,
+     run_bold_sweep,
+#    setup_receptors,
+#    adjust_ja_for_midbrain
 )
 
 # ------------------------
@@ -33,11 +33,11 @@ DATA_DIR = Paths.DATA
 # Load data
 # ------------------------
 
-W = pd.read_csv(os.path.join(DATA_DIR, "averaged_weights_with_sero_and_dopa.csv"), index_col=0)
+#W = pd.read_csv(os.path.join(DATA_DIR, "averaged_weights_with_sero_and_dopa.csv"), index_col=0)
 L = pd.read_csv(os.path.join(DATA_DIR, "averaged_lengths_with_sero_and_dopa.csv"), index_col=0)
-zscores = pd.read_csv(os.path.join(DATA_DIR, "averaged_cortical_zscores.csv"), index_col=0)
+#zscores = pd.read_csv(os.path.join(DATA_DIR, "averaged_cortical_zscores.csv"), index_col=0)
 
-regions_names = W.columns.to_list()
+regions_names = L.columns.to_list()
 
 # ------------------------
 # Model setup
@@ -57,16 +57,19 @@ setup = {
     "noise": 0.0631,
 }
 
-Ceids = stack_connectomes(W)
+Ceids = np.load('Ceids.npy')#stack_connectomes(W)
 setup["Seids"] = scipy.sparse.csr_matrix(Ceids)
-setup["idelays"] = setup_delays(L, Ceids, setup["v_c"], setup["dt"])
+setup["idelays"] = np.load('idelays.npy') #setup_delays(L, Ceids, setup["v_c"], setup["dt"])
 
-mean_Ja = 12
-std_Ja = 1.2
-pid = 0
-Ja = setup_ja(zscores, W, pid, mean_Ja, std_Ja)
+#mean_Ja = 12
+#std_Ja = 1.2
+#pid = 0
+#Ja = setup_ja(zscores, W, pid, mean_Ja, std_Ja)
+#Ja = adjust_ja_for_midbrain(Ja, regions_names)
+Ja = np.load('Ja.npy')
 
-Rd1, Rd2, Rsero = setup_receptors()
+#Rd1, Rd2, Rsero = setup_receptors()
+Rd1, Rd2, Rsero = np.load('Receptors.npy')
 
 # ------------------------
 # Set parameters
@@ -108,9 +111,7 @@ setup["params"] = theta
 # Run simulation
 # ------------------------
 
-tic = time.time()
 bold, raw = run_bold_sweep((theta, setup))
-toc = time.time()
 
 bold = np.asarray(bold)
 raw = np.asarray(raw)

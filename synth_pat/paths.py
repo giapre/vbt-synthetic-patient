@@ -6,6 +6,8 @@ class Paths:
     RESOURCES = ROOT / "resources"
     RESULTS = ROOT / "results"
     FIGURES = ROOT / "figures"
+    SNAKEMAKE = ROOT / "snakeproject"
 
-    TYPE_OF_SWEEP = "last_small_we_no_feed_we_wd_ws_noise=0.1585_sweep"
+    TYPE_OF_SWEEP = "jdopa_ws_sweep"
+
 

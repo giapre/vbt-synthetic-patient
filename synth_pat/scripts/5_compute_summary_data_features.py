@@ -13,11 +13,15 @@ sim_fc = sim_data['FC']
 sim_fcd = reconstruct_fcd(sim_data['FCD'], n_windows=221)
 sim_alff = sim_data['ALFF']
 params = np.round(sim_data['params'],4)
+print(params)
 
 sim_gbc = np.mean(sim_fc,axis=0)
 sim_var_fcd = fcd_variance_excluding_overlap(sim_fcd, window_length=60, overlap=59) #np.var(sim_fcd,axis=0)
 
-sim_df = pd.DataFrame({'GBC': sim_gbc, 'VAR_FCD': sim_var_fcd, 'we': np.round(params[:,0],4), 'wd': np.round(params[:,1],4), 'ws': np.round(params[:,2],4)})#'we': np.round(params[:,0],4), 'sigma': np.round(params[:,1],4)})#'we': np.round(params[:,0],4), 'wd': np.round(params[:,1],4), 'ws': np.round(params[:,2],4)})
+if 'jdopa' in type_of_sweep:
+    sim_df = pd.DataFrame({'GBC': sim_gbc, 'VAR_FCD': sim_var_fcd, 'ws': np.round(params[:,0],4), 'njdopa_ctx': np.round(params[:,1],4), 'njdopa_str': np.round(params[:,2],4)})
+else:
+    sim_df = pd.DataFrame({'GBC': sim_gbc, 'VAR_FCD': sim_var_fcd, 'we': np.round(params[:,0],4), 'wd': np.round(params[:,1],4), 'ws': np.round(params[:,2],4)})#'we': np.round(params[:,0],4), 'sigma': np.round(params[:,1],4)})#'we': np.round(params[:,0],4), 'wd': np.round(params[:,1],4), 'ws': np.round(params[:,2],4)})
 
 fc_regions = ['PU', 'CA', 'HI', 'STG', 'CER', 'CACG', 'RACG', 'IN', 'PCG', 'POP', 'POR', 'PTR']
 h_fc_regions = ['L.'+region for region in fc_regions] + ['R.'+region for region in fc_regions]
