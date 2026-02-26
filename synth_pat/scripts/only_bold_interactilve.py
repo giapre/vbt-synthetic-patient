@@ -14,15 +14,19 @@ feat_file = f"{Paths.RESULTS}/{type_of_sweep}_extracted_features.csv"
 
 feat_df = pd.read_csv(feat_file, index_col=0)
 
+p1_name = 'ws'
+p2_name = 'njdopa_ctx'
+p3_name = 'njdopa_str'
+
 # choose one simulation
-we_value = np.unique(feat_df['we'])[6]
-wd_value = np.unique(feat_df['wd'])[3]
-ws_value = np.unique(feat_df['ws'])[5]
+we_value = np.unique(feat_df[p1_name])[6]
+wd_value = np.unique(feat_df[p2_name])[3]
+ws_value = np.unique(feat_df[p3_name])[5]
 
 subset = feat_df[
-    (feat_df['we'] == we_value) &
-    (feat_df['wd'] == wd_value) &
-    (feat_df['ws'] == ws_value)
+    (feat_df[p1_name] == we_value) &
+    (feat_df[p2_name] == wd_value) &
+    (feat_df[p3_name] == ws_value)
 ]
 
 idx = subset.index[0]
